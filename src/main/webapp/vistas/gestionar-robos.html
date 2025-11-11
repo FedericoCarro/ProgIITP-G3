@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Robos - Sistema</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Gestión de Robos</h1>
+        <a href="/vistas/dashboard.html" class="btn-volver">Volver al Dashboard</a>
+    </header>
+
+    <main class="content-wrapper">
+
+        <div class="form-container">
+            <form id="robo-form">
+                <input type="hidden" id="robo-id">
+
+                <div class="form-group">
+                    <label for="detenidoId">Detenido:</label>
+                    <select id="detenidoId" required>
+                        <option value="">Cargando detenidos...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sucursalId">Sucursal Robada:</label>
+                    <select id="sucursalId" required>
+                        <option value="">Cargando sucursales...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="juezId">Juez Asignado:</label>
+                    <select id="juezId" required>
+                        <option value="">Cargando jueces...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fechaRobo">Fecha del Robo:</label>
+                    <input type="date" id="fechaRobo" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">Guardar Robo</button>
+                    <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Lista de Robos</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Detenido</th>
+                        <th>ID Sucursal</th>
+                        <th>ID Juez</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="robos-tabla-body">
+                    </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="/js/gestionar-robos.js"></script>
+</body>
+</html>

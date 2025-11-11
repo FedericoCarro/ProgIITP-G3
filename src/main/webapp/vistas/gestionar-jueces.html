@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Gestión de Jueces - Sistema</title>
+        <link rel="stylesheet" href="/resources/css/style.css">
+    </head>
+    <body>
+
+        <header class="page-header">
+            <h1>Gestión de Jueces</h1>
+            <a href="/vistas/dashboard.html" class="btn-volver">Volver al Dashboard</a>
+        </header>
+
+        <main class="content-wrapper">
+
+            <div class="form-container">
+                <form id="juez-form">
+                    <input type="hidden" id="juez-id">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre y Apellido:</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aniosDeServicio">Años de Servicio:</label>
+                        <input type="number" id="aniosDeServicio" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-guardar">Guardar Juez</button>
+                        <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h2>Lista de Jueces</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre y Apellido</th>
+                            <th>Años de Servicio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jueces-tabla-body">
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+
+        <script src="/js/gestionar-jueces.js"></script>
+    </body>
+</html>

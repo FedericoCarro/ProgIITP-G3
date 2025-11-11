@@ -1,0 +1,298 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+* {
+    box-sizing: border-box; 
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px; 
+    margin: 100px auto; 
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: #d93025; 
+    text-align: center;
+    margin-top: 1rem;
+    min-height: 1.2em; 
+}
+
+
+header {
+    background-color: #24292e;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#logout-btn {
+    width: auto;
+    background-color: #d73a49; 
+}
+
+#logout-btn:hover {
+    background-color: #b02a37;
+}
+
+main {
+    display: flex;
+    min-height: calc(100vh - 70px); 
+}
+
+#menu-container {
+    flex-basis: 240px;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    border-right: 1px solid #e1e4e8;
+    padding: 1.5rem;
+}
+
+#menu-container h3 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#menu-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menu-container li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0366d6;
+    border-radius: 5px;
+}
+
+#menu-container li a:hover {
+    background-color: #f6f8fa;
+    text-decoration: underline;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 2rem;
+}
+
+.page-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e4e8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.btn-volver:hover {
+    background-color: #0056b3;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap; 
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.form-container {
+    flex: 1; 
+    min-width: 350px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: fit-content; 
+}
+
+.form-container h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.form-group small {
+    display: block;
+    font-size: 0.8rem;
+    color: #6a737d;
+    margin-top: 4px;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.btn-guardar {
+    flex: 2; 
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.btn-guardar:hover {
+    background-color: #218838;
+}
+
+.btn-cancelar {
+    flex: 1;
+    padding: 12px;
+    background-color: #6a737d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.btn-cancelar:hover {
+    background-color: #586069;
+}
+
+
+.table-container {
+    flex: 2;
+    min-width: 400px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table-container h2 {
+    margin-top: 0;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #e1e4e8;
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.data-table thead {
+    background-color: #f6f8fa;
+}
+
+.data-table th {
+    font-weight: 600;
+}
+
+.btn-edit {
+    padding: 5px 10px;
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete {
+    padding: 5px 10px;
+    background-color: #d73a49;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-delete:hover {
+    background-color: #b02a37;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Detenidos - Sistema</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Gestión de Detenidos</h1>
+        <a href="/vistas/dashboard.html" class="btn-volver">Volver al Dashboard</a>
+    </header>
+
+    <main class="content-wrapper">
+
+        <div class="form-container">
+            <form id="detenido-form">
+                <input type="hidden" id="detenido-id">
+
+                <div class="form-group">
+                    <label for="nomApe">Nombre y Apellido:</label>
+                    <input type="text" id="nomApe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bandaId">Banda Organizada:</label>
+                    <select id="bandaId" required>
+                        <option value="">Cargando bandas...</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">Guardar Detenido</button>
+                    <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Lista de Detenidos</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nombre y Apellido</th>
+                        <th>ID Banda</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="detenidos-tabla-body">
+                    </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="/js/gestionar-detenidos.js"></script>
+</body>
+</html>

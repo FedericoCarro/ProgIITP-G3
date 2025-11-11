@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Condenas - Sistema</title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Gestión de Condenas</h1>
+        <a href="/vistas/dashboard.html" class="btn-volver">Volver al Dashboard</a>
+    </header>
+
+    <main class="content-wrapper">
+
+        <div class="form-container">
+            <form id="condena-form">
+                <input type="hidden" id="condena-id">
+                
+                <div class="form-group">
+                    <label for="roboId">Robo Asociado:</label>
+                    <select id="roboId" required>
+                        <option value="">Cargando robos...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha Inicio Condena:</label>
+                    <input type="date" id="fechaInicio" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha Fin Condena:</label>
+                    <input type="date" id="fechaFin" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">Guardar Condena</button>
+                    <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Lista de Condenas</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Robo</th>
+                        <th>Inicio Condena</th>
+                        <th>Fin Condena</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="condenas-tabla-body">
+                    </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="/js/gestionar-condenas.js"></script>
+</body>
+</html>

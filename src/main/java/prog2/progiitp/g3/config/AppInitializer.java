@@ -11,7 +11,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 public class AppInitializer implements WebApplicationInitializer {
  @Override
 public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+    AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(AppConfig.class, PersistenceJPAConfig.class,SecurityConfig.class);
         context.setServletContext(servletContext);
         

@@ -2,24 +2,24 @@ package prog2.progiitp.g3.dto;
 
 public class EntidadBancariaDTO {
 
-    private int id;
+    private Integer id;
     private String nombre;
     private String domicilioCentral;
 
     public EntidadBancariaDTO() {
     }
 
-    public EntidadBancariaDTO(int id, String nombre, String domicilioCentral) {
+    public EntidadBancariaDTO(Integer id, String nombre, String domicilioCentral) {
         this.id = id;
         this.nombre = nombre;
         this.domicilioCentral = domicilioCentral;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

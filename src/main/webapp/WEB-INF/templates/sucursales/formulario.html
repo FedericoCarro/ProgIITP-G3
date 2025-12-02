@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Formulario Sucursal</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <h1>Datos de la Sucursal</h1>
+    <form th:action="@{/sucursales/guardar}" th:object="${sucursal}" method="post" class="form-container">
+        <input type="hidden" th:field="*{id}">
+        
+        <div class="form-group">
+            <label>Domicilio:</label>
+            <input type="text" th:field="*{domicilio}" required>
+        </div>
+        <div class="form-group">
+            <label>Empleados:</label>
+            <input type="number" th:field="*{cantEmpleados}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Entidad Bancaria:</label>
+            <select th:field="*{idEntidadBancaria}" required>
+                <option value="">-- Seleccione --</option>
+                <option th:each="entidad : ${listaEntidades}" 
+                        th:value="${entidad.id}" 
+                        th:text="${entidad.nombre}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+</body>
+</html>

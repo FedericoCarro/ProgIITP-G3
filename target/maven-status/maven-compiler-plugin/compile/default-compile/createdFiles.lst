@@ -1,8 +1,8 @@
-prog2\progiitp\g3\controladores\AuthController.class
 prog2\progiitp\g3\controladores\DetenidoController.class
 prog2\progiitp\g3\servicios\CondenaService.class
 prog2\progiitp\g3\controladores\JuezController.class
 prog2\progiitp\g3\controladores\RoboController.class
+prog2\progiitp\g3\controladores\LoginController.class
 prog2\progiitp\g3\dao\DetenidoDAO.class
 prog2\progiitp\g3\dao\ContratadoDAO.class
 prog2\progiitp\g3\servicios\RoboService.class

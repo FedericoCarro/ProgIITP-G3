@@ -1,69 +1,73 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.UsuarioDTO;
 import prog2.progiitp.g3.servicios.UsuarioService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-@RestController
+@Controller
 @RequestMapping("/usuarios") 
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO dto) {
-        UsuarioDTO nuevoUsuario = usuarioService.crearUsuario(dto);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarUsuario(@PathVariable int id) {
-        usuarioService.borrarUsuario(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-        @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(
-            @PathVariable int id,
-            @RequestBody UsuarioDTO dto) {
-        
-        UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, dto);
-        return new ResponseEntity<>(usuarioActualizado, HttpStatus.OK);
-    }
-    
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<UsuarioDTO>> obtenerTodos() {
-        List<UsuarioDTO> usuarios = usuarioService.obtenerTodos();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String listarUsuarios(Model model) {
+        List<UsuarioDTO> lista = usuarioService.obtenerTodos();
+        model.addAttribute("usuarios", lista);
+
+        return "usuarios/lista"; 
+    }
+    @GetMapping("/nuevo")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String mostrarFormularioCrear(Model model) {
+        model.addAttribute("usuario", new UsuarioDTO());
+        return "usuarios/formulario"; 
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<UsuarioDTO> obtenerPorId(@PathVariable int id) {
+    @GetMapping("/editar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String mostrarFormularioEditar(@PathVariable int id, Model model) {
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
+        model.addAttribute("usuario", usuario);
+        return "usuarios/formulario";
     }
 
-    
-@GetMapping("/mi-perfil")
-@PreAuthorize("isAuthenticated()")
-public ResponseEntity<UsuarioDTO> obtenerMiPerfil() { 
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardarUsuario(@ModelAttribute("usuario") UsuarioDTO usuario) {
+        if (usuario.getId()!=null && usuario.getId() > 0) {
+            usuarioService.actualizarUsuario(usuario.getId(), usuario);
+        } else {
+            usuarioService.crearUsuario(usuario);
+        }
+        return "redirect:/usuarios"; 
+    }
 
-    int dni = Integer.parseInt(authentication.getName());
-    UsuarioDTO usuario = usuarioService.obtenerPorDni(dni);
-    return ResponseEntity.ok(usuario);
-}
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String borrarUsuario(@PathVariable int id) {
+        usuarioService.borrarUsuario(id);
+        return "redirect:/usuarios";
+    }
+
+    @GetMapping("/mi-perfil")
+    @PreAuthorize("isAuthenticated()")
+    public String verMiPerfil(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        int dni = Integer.parseInt(authentication.getName());
+        
+        UsuarioDTO usuario = usuarioService.obtenerPorDni(dni);
+        model.addAttribute("usuario", usuario);
+        
+        return "usuarios/perfil";
+    }
 }

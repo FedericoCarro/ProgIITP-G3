@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Formulario Robo</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <h1>Registrar Robo</h1>
+    <form th:action="@{/robos/guardar}" th:object="${robo}" method="post" class="form-container">
+        <input type="hidden" th:field="*{id}">
+        
+        <div class="form-group">
+            <label>Fecha:</label>
+            <input type="date" th:field="*{fechaRobo}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Detenido:</label>
+            <select th:field="*{idDetenido}" required>
+                <option th:each="det : ${listaDetenidos}" 
+                        th:value="${det.id}" 
+                        th:text="${det.nomApe}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Sucursal:</label>
+            <select th:field="*{idSucursal}" required>
+                <option th:each="suc : ${listaSucursales}" 
+                        th:value="${suc.id}" 
+                        th:text="${suc.domicilio}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Juez:</label>
+            <select th:field="*{idJuez}" required>
+                <option th:each="juez : ${listaJueces}" 
+                        th:value="${juez.clave}" 
+                        th:text="${juez.nombre}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+</body>
+</html>

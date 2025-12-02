@@ -23,6 +23,6 @@ public void onStartup(ServletContext servletContext) throws ServletException {
         
         ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
         servlet.setLoadOnStartup(1);
-        servlet.addMapping("/api/*");
+        servlet.addMapping("/");
     }
 }

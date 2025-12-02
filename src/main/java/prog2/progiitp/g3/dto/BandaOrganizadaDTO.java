@@ -1,24 +1,24 @@
 package prog2.progiitp.g3.dto;
 
 public class BandaOrganizadaDTO {
-    private int id;
+    private Integer id;
     private String nombre;
-    private int cantMiembros;
+    private Integer cantMiembros;
 
     public BandaOrganizadaDTO() {
     }
 
-    public BandaOrganizadaDTO(int id, String nombre, int cantMiembros) {
+    public BandaOrganizadaDTO(Integer id, String nombre, Integer cantMiembros) {
         this.id = id;
         this.nombre = nombre;
         this.cantMiembros = cantMiembros;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -30,11 +30,11 @@ public class BandaOrganizadaDTO {
         this.nombre = nombre;
     }
 
-    public int getCantMiembros() {
+    public Integer getCantMiembros() {
         return cantMiembros;
     }
 
-    public void setCantMiembros(int cantMiembros) {
+    public void setCantMiembros(Integer cantMiembros) {
         this.cantMiembros = cantMiembros;
     }
 

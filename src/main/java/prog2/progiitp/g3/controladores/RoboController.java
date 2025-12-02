@@ -1,54 +1,71 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.RoboDTO;
+import prog2.progiitp.g3.servicios.DetenidoService;
+import prog2.progiitp.g3.servicios.JuezService;
 import prog2.progiitp.g3.servicios.RoboService;
-import java.util.List;
+import prog2.progiitp.g3.servicios.SucursalBancariaService;
 
-@RestController
+@Controller
 @RequestMapping("/robos")
 public class RoboController {
 
     @Autowired
     private RoboService roboService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<RoboDTO> registrarRobo(@RequestBody RoboDTO dto) {
-        RoboDTO nuevoRobo = roboService.crearRobo(dto);
-        return new ResponseEntity<>(nuevoRobo, HttpStatus.CREATED);
-    }
+    @Autowired
+    private DetenidoService detenidoService;
+    @Autowired
+    private SucursalBancariaService sucursalService;
+    @Autowired
+    private JuezService juezService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<RoboDTO>> obtenerTodos() {
-        List<RoboDTO> robos = roboService.obtenerTodos();
-        return new ResponseEntity<>(robos, HttpStatus.OK);
+    public String listar(Model model) {
+        model.addAttribute("robos", roboService.obtenerTodos());
+        return "robos/lista";
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<RoboDTO> obtenerPorId(@PathVariable int id) {
-        RoboDTO robo = roboService.obtenerPorId(id);
-        return new ResponseEntity<>(robo, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<RoboDTO> actualizarRobo(@PathVariable int id, @RequestBody RoboDTO dto) {
-        RoboDTO roboActualizado = roboService.actualizarRobo(id, dto);
-        return new ResponseEntity<>(roboActualizado, HttpStatus.OK);
+    public String formularioCrear(Model model) {
+        model.addAttribute("robo", new RoboDTO());
+        model.addAttribute("listaDetenidos", detenidoService.obtenerTodos());
+        model.addAttribute("listaSucursales", sucursalService.obtenerTodas());
+        model.addAttribute("listaJueces", juezService.obtenerTodos());
+        return "robos/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarRobo(@PathVariable int id) {
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("robo", roboService.obtenerPorId(id));
+        model.addAttribute("listaDetenidos", detenidoService.obtenerTodos());
+        model.addAttribute("listaSucursales", sucursalService.obtenerTodas());
+        model.addAttribute("listaJueces", juezService.obtenerTodos());
+        return "robos/formulario";
+    }
+
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardar(@ModelAttribute RoboDTO dto) {
+        if (dto.getId()!=null && dto.getId() > 0) {
+            roboService.actualizarRobo(dto.getId(), dto);
+        } else {
+            roboService.crearRobo(dto);
+        }
+        return "redirect:/robos";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
         roboService.borrarRobo(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/robos";
     }
-
 }

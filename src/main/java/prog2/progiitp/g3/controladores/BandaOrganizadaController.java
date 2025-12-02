@@ -1,57 +1,56 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.BandaOrganizadaDTO;
 import prog2.progiitp.g3.servicios.BandaOrganizadaService;
-import java.util.List;
 
-@RestController
-@RequestMapping("/bandas") 
+@Controller
+@RequestMapping("/bandas")
 public class BandaOrganizadaController {
 
     @Autowired
-    private BandaOrganizadaService bandaOrganizadaService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<BandaOrganizadaDTO> crearBanda(@RequestBody BandaOrganizadaDTO dto) {
-        BandaOrganizadaDTO nuevaBanda = bandaOrganizadaService.crearBanda(dto);
-        return new ResponseEntity<>(nuevaBanda, HttpStatus.CREATED);
-    }
+    private BandaOrganizadaService bandaService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<BandaOrganizadaDTO>> obtenerTodas() {
-        List<BandaOrganizadaDTO> bandas = bandaOrganizadaService.obtenerTodas();
-        return new ResponseEntity<>(bandas, HttpStatus.OK);
+    public String listar(Model model) {
+        model.addAttribute("bandas", bandaService.obtenerTodas());
+        return "bandas/lista"; 
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<BandaOrganizadaDTO> obtenerPorId(@PathVariable int id) {
-        BandaOrganizadaDTO banda = bandaOrganizadaService.obtenerPorId(id);
-        return new ResponseEntity<>(banda, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<BandaOrganizadaDTO> actualizarBanda(
-            @PathVariable int id,
-            @RequestBody BandaOrganizadaDTO dto) {
-        
-        BandaOrganizadaDTO bandaActualizada = bandaOrganizadaService.actualizarBanda(id, dto);
-        return new ResponseEntity<>(bandaActualizada, HttpStatus.OK);
+    public String formularioCrear(Model model) {
+        model.addAttribute("banda", new BandaOrganizadaDTO());
+        return "bandas/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarBanda(@PathVariable int id) {
-        bandaOrganizadaService.borrarBanda(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("banda", bandaService.obtenerPorId(id));
+        return "bandas/formulario";
     }
 
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardar(@ModelAttribute BandaOrganizadaDTO banda) {
+        if (banda.getId()!=null && banda.getId() > 0) {
+            bandaService.actualizarBanda(banda.getId(), banda);
+        } else {
+            bandaService.crearBanda(banda);
+        }
+        return "redirect:/bandas";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
+        bandaService.borrarBanda(id);
+        return "redirect:/bandas";
+    }
 }

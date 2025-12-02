@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Formulario Condena</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <h1>Datos de la Condena</h1>
+    <form th:action="@{/condenas/guardar}" th:object="${condena}" method="post" class="form-container">
+        <input type="hidden" th:field="*{id}">
+        
+        <div class="form-group">
+            <label>Robo Asociado (ID):</label>
+            <select th:field="*{idRobo}" required>
+                <option value="">-- Seleccione --</option>
+                <option th:each="r : ${listaRobos}" 
+                        th:value="${r.id}" 
+                        th:text="'Robo #' + ${r.id} + ' (' + ${r.fechaRobo} + ')'"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Fecha Inicio:</label>
+            <input type="date" th:field="*{fechaInicio}" required>
+        </div>
+        <div class="form-group">
+            <label>Fecha Fin:</label>
+            <input type="date" th:field="*{fechaFin}" required>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+</body>
+</html>

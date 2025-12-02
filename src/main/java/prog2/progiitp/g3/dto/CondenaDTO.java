@@ -1,35 +1,38 @@
 package prog2.progiitp.g3.dto;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class CondenaDTO {
-    private int id;
-    private int idRobo;
+    private Integer id;
+    private Integer idRobo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaFin;
 
     public CondenaDTO() {
     }
 
-    public CondenaDTO(int id, int idRobo, LocalDate fechaInicio, LocalDate fechaFin) {
+    public CondenaDTO(Integer id, Integer idRobo, LocalDate fechaInicio, LocalDate fechaFin) {
         this.id = id;
         this.idRobo = idRobo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getIdRobo() {
+    public Integer getIdRobo() {
         return idRobo;
     }
 
-    public void setIdRobo(int idRobo) {
+    public void setIdRobo(Integer idRobo) {
         this.idRobo = idRobo;
     }
 

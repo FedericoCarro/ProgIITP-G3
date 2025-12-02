@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head><title>Bandas</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <header class="page-header">
+        <h1>Bandas Organizadas</h1>
+        <a th:href="@{/dashboard}" class="btn-volver">Volver</a>
+    </header>
+    <main class="content-wrapper">
+        <div sec:authorize="hasAuthority('ADMINISTRADOR')">
+            <a th:href="@{/bandas/nuevo}" class="btn-guardar">Nueva Banda</a>
+        </div>
+        <br>
+        <table class="data-table">
+            <thead><tr><th>Nombre</th><th>Miembros</th><th sec:authorize="hasAuthority('ADMINISTRADOR')">Acciones</th></tr></thead>
+            <tbody>
+                <tr th:each="banda : ${bandas}">
+                    <td th:text="${banda.nombre}"></td>
+                    <td th:text="${banda.cantMiembros}"></td>
+                    <td sec:authorize="hasAuthority('ADMINISTRADOR')">
+                        <a th:href="@{/bandas/editar/{id}(id=${banda.id})}" class="btn-edit">Editar</a>
+                        <a th:href="@{/bandas/eliminar/{id}(id=${banda.id})}" class="btn-delete" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

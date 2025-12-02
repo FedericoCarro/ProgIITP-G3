@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <header class="page-header">
+        <h1>Gestión de Usuarios</h1>
+        <a th:href="@{/dashboard}" class="btn-volver">Volver al Dashboard</a>
+    </header>
+
+    <main class="content-wrapper">
+        <div sec:authorize="hasAuthority('ADMINISTRADOR')">
+            <a th:href="@{/usuarios/nuevo}" class="btn-guardar">Crear Nuevo Usuario</a>
+        </div>
+        
+        <br>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nombre y Apellido</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Edad</th>
+                        <th>Permiso</th>
+                        <th sec:authorize="hasAuthority('ADMINISTRADOR')">Acciones</th>
+                    </tr>
+                </thead>
+<tbody>
+                    <tr th:each="u : ${usuarios}">
+                        <td th:text="${u.nomApe}"></td>
+                        <td th:text="${u.dni}"></td>
+                        <td th:text="${u.tel}"></td>
+                        <td th:text="${u.edad}"></td>
+                        <td th:text="${u.permiso}"></td>
+                        
+                        <td sec:authorize="hasAuthority('ADMINISTRADOR')">
+                            <a th:href="@{/usuarios/editar/{id}(id=${u.id})}" class="btn-edit">Editar</a>
+                            <a th:href="@{/usuarios/eliminar/{id}(id=${u.id})}" 
+                               class="btn-delete" 
+                               onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                        </td>
+                    </tr>
+                    
+                    <tr th:if="${#lists.isEmpty(usuarios)}">
+                        <td colspan="6" style="text-align: center;">No hay usuarios registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

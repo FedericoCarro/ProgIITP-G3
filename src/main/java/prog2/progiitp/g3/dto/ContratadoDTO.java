@@ -1,20 +1,23 @@
 package prog2.progiitp.g3.dto;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ContratadoDTO {
-    private int id;
+    private Integer id;
     private boolean conArma;
-    private int idVigilante;
-    private int idSucBancaria;
+    private Integer idVigilante;
+    private Integer idSucBancaria;
 
-    private int horasTrabajadas;
+    private Integer horasTrabajadas;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaInicioJornada;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaFinJornada;
 
     public ContratadoDTO() {
     }
 
-    public ContratadoDTO(int id, boolean conArma, int idVigilante, int idSucBancaria, int horasTrabajadas, LocalDate fechaInicioJornada, LocalDate fechaFinJornada) {
+    public ContratadoDTO(Integer id, boolean conArma, Integer idVigilante, Integer idSucBancaria, Integer horasTrabajadas, LocalDate fechaInicioJornada, LocalDate fechaFinJornada) {
         this.id = id;
         this.conArma = conArma;
         this.idVigilante = idVigilante;
@@ -24,11 +27,11 @@ public class ContratadoDTO {
         this.fechaFinJornada = fechaFinJornada;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,27 +43,27 @@ public class ContratadoDTO {
         this.conArma = conArma;
     }
 
-    public int getIdVigilante() {
+    public Integer getIdVigilante() {
         return idVigilante;
     }
 
-    public void setIdVigilante(int idVigilante) {
+    public void setIdVigilante(Integer idVigilante) {
         this.idVigilante = idVigilante;
     }
 
-    public int getIdSucBancaria() {
+    public Integer getIdSucBancaria() {
         return idSucBancaria;
     }
 
-    public void setIdSucBancaria(int idSucBancaria) {
+    public void setIdSucBancaria(Integer idSucBancaria) {
         this.idSucBancaria = idSucBancaria;
     }
 
-    public int getHorasTrabajadas() {
+    public Integer getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-    public void setHorasTrabajadas(int horasTrabajadas) {
+    public void setHorasTrabajadas(Integer horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
 

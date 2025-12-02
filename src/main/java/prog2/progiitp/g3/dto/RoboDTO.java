@@ -1,14 +1,16 @@
 package prog2.progiitp.g3.dto;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class RoboDTO {
-    private int id; 
-    private int idDetenido;
-    private int idSucursal;
-    private int idJuez;
+    private Integer id; 
+    private Integer idDetenido;
+    private Integer idSucursal;
+    private Integer idJuez;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaRobo;
 
-    public RoboDTO(int id, int idDetenido, int idSucursal, int idJuez, LocalDate fechaRobo) {
+    public RoboDTO(Integer id, Integer idDetenido, Integer idSucursal, Integer idJuez, LocalDate fechaRobo) {
         this.id = id;
         this.idDetenido = idDetenido;
         this.idSucursal = idSucursal;
@@ -19,35 +21,35 @@ public class RoboDTO {
     public RoboDTO() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getIdDetenido() {
+    public Integer getIdDetenido() {
         return idDetenido;
     }
 
-    public void setIdDetenido(int idDetenido) {
+    public void setIdDetenido(Integer idDetenido) {
         this.idDetenido = idDetenido;
     }
 
-    public int getIdSucursal() {
+    public Integer getIdSucursal() {
         return idSucursal;
     }
 
-    public void setIdSucursal(int idSucursal) {
+    public void setIdSucursal(Integer idSucursal) {
         this.idSucursal = idSucursal;
     }
 
-    public int getIdJuez() {
+    public Integer getIdJuez() {
         return idJuez;
     }
 
-    public void setIdJuez(int idJuez) {
+    public void setIdJuez(Integer idJuez) {
         this.idJuez = idJuez;
     }
 

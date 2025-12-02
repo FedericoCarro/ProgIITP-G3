@@ -1,24 +1,24 @@
 package prog2.progiitp.g3.dto;
 
 public class JuezDTO {
-    private int clave;
+    private Integer clave;
     private String nombre;
-    private int aniosDeServicio;
+    private Integer aniosDeServicio;
 
     public JuezDTO() {
     }
 
-    public JuezDTO(int clave, String nombre, int aniosDeServicio) {
+    public JuezDTO(Integer clave, String nombre, Integer aniosDeServicio) {
         this.clave = clave;
         this.nombre = nombre;
         this.aniosDeServicio = aniosDeServicio;
     }
 
-    public int getClave() {
+    public Integer getClave() {
         return clave;
     }
 
-    public void setClave(int clave) {
+    public void setClave(Integer clave) {
         this.clave = clave;
     }
 
@@ -30,11 +30,11 @@ public class JuezDTO {
         this.nombre = nombre;
     }
 
-    public int getAniosDeServicio() {
+    public Integer getAniosDeServicio() {
         return aniosDeServicio;
     }
 
-    public void setAniosDeServicio(int aniosDeServicio) {
+    public void setAniosDeServicio(Integer aniosDeServicio) {
         this.aniosDeServicio = aniosDeServicio;
     }
 

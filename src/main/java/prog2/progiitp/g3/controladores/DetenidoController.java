@@ -1,57 +1,61 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.DetenidoDTO;
+import prog2.progiitp.g3.servicios.BandaOrganizadaService;
 import prog2.progiitp.g3.servicios.DetenidoService;
-import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 
-@RestController
+@Controller
 @RequestMapping("/detenidos")
 public class DetenidoController {
 
     @Autowired
     private DetenidoService detenidoService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<DetenidoDTO> crearDetenido(@RequestBody DetenidoDTO dto) {
-        DetenidoDTO nuevoDetenido = detenidoService.crearDetenido(dto);
-        return new ResponseEntity<>(nuevoDetenido, HttpStatus.CREATED);
-    }
+    @Autowired
+    private BandaOrganizadaService bandaService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<DetenidoDTO>> obtenerTodos() {
-        List<DetenidoDTO> detenidos = detenidoService.obtenerTodos();
-        return new ResponseEntity<>(detenidos, HttpStatus.OK);
+    public String listar(Model model) {
+        model.addAttribute("detenidos", detenidoService.obtenerTodos());
+        return "detenidos/lista";
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<DetenidoDTO> obtenerPorId(@PathVariable int id) {
-        DetenidoDTO detenido = detenidoService.obtenerPorId(id);
-        return new ResponseEntity<>(detenido, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<DetenidoDTO> actualizarDetenido(
-            @PathVariable int id,
-            @RequestBody DetenidoDTO dto) {
-        
-        DetenidoDTO detenidoActualizado = detenidoService.actualizarDetenido(id, dto);
-        return new ResponseEntity<>(detenidoActualizado, HttpStatus.OK);
+    public String formularioCrear(Model model) {
+        model.addAttribute("detenido", new DetenidoDTO());
+        model.addAttribute("listaBandas", bandaService.obtenerTodas());
+        return "detenidos/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarDetenido(@PathVariable int id) {
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("detenido", detenidoService.obtenerPorId(id));
+        model.addAttribute("listaBandas", bandaService.obtenerTodas());
+        return "detenidos/formulario";
+    }
+
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardar(@ModelAttribute DetenidoDTO dto) {
+        if (dto.getId()!=null && dto.getId() > 0) {
+            detenidoService.actualizarDetenido(dto.getId(), dto);
+        } else {
+            detenidoService.crearDetenido(dto);
+        }
+        return "redirect:/detenidos";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
         detenidoService.borrarDetenido(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/detenidos";
     }
-
 }

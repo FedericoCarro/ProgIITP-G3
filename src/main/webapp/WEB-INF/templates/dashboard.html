@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    </head>
+<body>
+    <header class="page-header">
+        <h1>Sistema de Gestión Policial</h1>
+        
+        <div class="user-info">
+            <span>Bienvenido, <strong sec:authentication="name">Usuario</strong></span>
+            
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" id="logout-btn">Cerrar Sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div sec:authorize="hasAuthority('ADMINISTRADOR')" class="menu-section">
+            <h2>Panel de Administrador</h2>
+            <div class="card-grid">
+                <h3>Gestión General</h3>
+                <ul>
+                    <li><a th:href="@{/usuarios}">Gestionar Usuarios</a></li>
+                    <li><a th:href="@{/entidades}">Entidades Bancarias</a></li>
+                    <li><a th:href="@{/sucursales}">Sucursales</a></li>
+                    <li><a th:href="@{/contratos}">Contratos</a></li>
+                </ul>
+                <h3>Gestión de Casos</h3>
+                <ul>
+                    <li><a th:href="@{/bandas}">Bandas Organizadas</a></li>
+                    <li><a th:href="@{/detenidos}">Detenidos</a></li>
+                    <li><a th:href="@{/jueces}">Jueces</a></li>
+                    <li><a th:href="@{/robos}">Robos</a></li>
+                    <li><a th:href="@{/condenas}">Condenas</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div sec:authorize="hasAuthority('INVESTIGADOR')" class="menu-section">
+            <h2>Panel de Investigador</h2>
+            <p>Acceso de lectura y análisis de casos.</p>
+            <ul>
+                <li><a th:href="@{/bandas}">Ver Bandas</a></li>
+                <li><a th:href="@{/detenidos}">Ver Detenidos</a></li>
+                <li><a th:href="@{/robos}">Ver Robos</a></li>
+                <li><a th:href="@{/jueces}">Ver Jueces</a></li>
+                <li><a th:href="@{/sucursales}">Ver Sucursales</a></li>
+                <li><a th:href="@{/contratos}">Ver Contratos</a></li>
+                <li><a th:href="@{/condenas}">Ver Condenas</a></li>
+            </ul>
+        </div>
+
+        <div sec:authorize="hasAuthority('VIGILANTE')" class="menu-section">
+            <h2>Panel de Vigilancia</h2>
+            <p>Gestión de turnos y asignaciones.</p>
+            <div class="big-button-container">
+                <a th:href="@{/contratos/mis-contratos}" class="btn-primary">Ver Mis Contratos</a>
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>

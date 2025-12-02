@@ -1,54 +1,61 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.CondenaDTO;
-import prog2.progiitp.g3.servicios.CondenaService; 
-import java.util.List;
+import prog2.progiitp.g3.servicios.CondenaService;
+import prog2.progiitp.g3.servicios.RoboService;
 
-@RestController
+@Controller
 @RequestMapping("/condenas")
 public class CondenaController {
 
     @Autowired
     private CondenaService condenaService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<CondenaDTO> crearCondena(@RequestBody CondenaDTO dto) {
-        CondenaDTO nuevaCondena = condenaService.crearCondena(dto);
-        return new ResponseEntity<>(nuevaCondena, HttpStatus.CREATED);
-    }
+    @Autowired
+    private RoboService roboService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<CondenaDTO>> obtenerTodas() {
-        List<CondenaDTO> condenas = condenaService.obtenerTodas();
-        return new ResponseEntity<>(condenas, HttpStatus.OK);
+    public String listar(Model model) {
+        model.addAttribute("condenas", condenaService.obtenerTodas());
+        return "condenas/lista";
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<CondenaDTO> obtenerPorId(@PathVariable int id) {
-        CondenaDTO condena = condenaService.obtenerPorId(id);
-        return new ResponseEntity<>(condena, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<CondenaDTO> actualizarCondena(@PathVariable int id, @RequestBody CondenaDTO dto) {
-        CondenaDTO condenaActualizada = condenaService.actualizarCondena(id, dto);
-        return new ResponseEntity<>(condenaActualizada, HttpStatus.OK);
+    public String formularioCrear(Model model) {
+        model.addAttribute("condena", new CondenaDTO());
+        model.addAttribute("listaRobos", roboService.obtenerTodos());
+        return "condenas/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarCondena(@PathVariable int id) {
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("condena", condenaService.obtenerPorId(id));
+        model.addAttribute("listaRobos", roboService.obtenerTodos());
+        return "condenas/formulario";
+    }
+
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardar(@ModelAttribute CondenaDTO dto) {
+        if (dto.getId()!=null && dto.getId() > 0) {
+            condenaService.actualizarCondena(dto.getId(), dto);
+        } else {
+            condenaService.crearCondena(dto);
+        }
+        return "redirect:/condenas";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
         condenaService.borrarCondena(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return "redirect:/condenas";
     }
-
 }

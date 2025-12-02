@@ -1,57 +1,56 @@
 package prog2.progiitp.g3.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.EntidadBancariaDTO;
 import prog2.progiitp.g3.servicios.EntidadBancariaService;
 
-import java.util.List;
-
-@RestController 
-@RequestMapping("/entidades") 
+@Controller
+@RequestMapping("/entidades")
 public class EntidadBancariaController {
 
     @Autowired
-    private EntidadBancariaService entidadBancariaService;
+    private EntidadBancariaService entidadService;
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<EntidadBancariaDTO>> obtenerTodas() {
-        List<EntidadBancariaDTO> entidades = entidadBancariaService.obtenerTodas();
-        return new ResponseEntity<>(entidades, HttpStatus.OK);
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')") 
+    public String listar(Model model) {
+        model.addAttribute("entidades", entidadService.obtenerTodas());
+        return "entidades/lista";
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<EntidadBancariaDTO> obtenerPorId(@PathVariable int id) {
-        EntidadBancariaDTO entidad = entidadBancariaService.obtenerPorId(id);
-        return new ResponseEntity<>(entidad, HttpStatus.OK);
-    }
-
-    @PostMapping
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<EntidadBancariaDTO> crearEntidad(@RequestBody EntidadBancariaDTO dto) {
-        EntidadBancariaDTO nuevaEntidad = entidadBancariaService.crearEntidad(dto);
-        return new ResponseEntity<>(nuevaEntidad, HttpStatus.CREATED); 
+    public String formularioCrear(Model model) {
+        model.addAttribute("entidad", new EntidadBancariaDTO());
+        return "entidades/formulario";
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<EntidadBancariaDTO> actualizarEntidad(
-            @PathVariable int id, 
-            @RequestBody EntidadBancariaDTO dto) {
-        
-        EntidadBancariaDTO entidadActualizada = entidadBancariaService.actualizarEntidad(id, dto);
-        return new ResponseEntity<>(entidadActualizada, HttpStatus.OK);
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("entidad", entidadService.obtenerPorId(id));
+        return "entidades/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/guardar")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarEntidad(@PathVariable int id) {
-        entidadBancariaService.borrarEntidad(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public String guardar(@ModelAttribute EntidadBancariaDTO dto) {
+        if (dto.getId()!=null && dto.getId() > 0) {
+            entidadService.actualizarEntidad(dto.getId(), dto);
+        } else {
+            entidadService.crearEntidad(dto);
+        }
+        return "redirect:/entidades";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
+        entidadService.borrarEntidad(id);
+        return "redirect:/entidades";
     }
 }

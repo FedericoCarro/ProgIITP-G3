@@ -1,18 +1,18 @@
 package prog2.progiitp.g3.dto;
 
 public class UsuarioDTO {
-    private int id;
+    private Integer id;
     private String contrasenia;
     private String nomApe;
-    private int dni;
-    private int tel;
-    private int edad;
+    private Integer dni;
+    private Integer tel;
+    private Integer edad;
     private String permiso;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(int id, String contrasenia, String nomApe, int dni, int tel, int edad, String permiso) {
+    public UsuarioDTO(Integer id, String contrasenia, String nomApe, Integer dni, Integer tel, Integer edad, String permiso) {
         this.id = id;
         this.contrasenia = contrasenia;
         this.nomApe = nomApe;
@@ -22,11 +22,11 @@ public class UsuarioDTO {
         this.permiso = permiso;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,27 +46,27 @@ public class UsuarioDTO {
         this.nomApe = nomApe;
     }
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(Integer dni) {
         this.dni = dni;
     }
 
-    public int getTel() {
+    public Integer getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(Integer tel) {
         this.tel = tel;
     }
 
-    public int getEdad() {
+    public Integer getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(Integer edad) {
         this.edad = edad;
     }
 

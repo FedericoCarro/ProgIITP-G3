@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Contratos</title>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <header class="page-header">
+        <h1>Mis Asignaciones</h1>
+        <a th:href="@{/dashboard}" class="btn-volver">Volver</a>
+    </header>
+
+    <main class="content-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Sucursal ID</th>
+                    <th>¿Armado?</th>
+                    <th>Horas</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c : ${contratos}">
+                    <td th:text="${c.idSucBancaria}"></td>
+                    <td th:text="${c.conArma} ? 'Sí' : 'No'"></td>
+                    <td th:text="${c.horasTrabajadas}"></td>
+                    <td th:text="${c.fechaInicioJornada}"></td>
+                    <td th:text="${c.fechaFinJornada}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(contratos)}">
+                    <td colspan="5">No tienes contratos asignados.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

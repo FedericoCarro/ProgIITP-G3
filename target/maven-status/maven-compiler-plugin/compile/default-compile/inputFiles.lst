@@ -24,6 +24,7 @@ C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiit
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dto\LoginRequestDTO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dto\EntidadBancariaDTO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\modelos\Condena.java
+C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\controladores\LoginController.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dto\LoginResponseDTO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\controladores\BandaOrganizadaController.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dao\ContratadoDAO.java
@@ -33,7 +34,6 @@ C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiit
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dao\CondenaDAO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dto\DetenidoDTO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\servicios\CondenaService.java
-C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\controladores\AuthController.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\dao\UsuarioDAO.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\controladores\DetenidoController.java
 C:\Users\User\Documents\NetBeansProjects\ProgIITP-G3\src\main\java\prog2\progiitp\g3\modelos\Detenido.java

@@ -1,24 +1,24 @@
 package prog2.progiitp.g3.dto;
 
 public class DetenidoDTO {
-    private int id;
+    private Integer id;
     private String nomApe;
-    private int idBO;
+    private Integer idBO;
 
     public DetenidoDTO() {
     }
 
-    public DetenidoDTO(int id, String nomApe, int idBO) {
+    public DetenidoDTO(Integer id, String nomApe, Integer idBO) {
         this.id = id;
         this.nomApe = nomApe;
         this.idBO = idBO;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -30,11 +30,11 @@ public class DetenidoDTO {
         this.nomApe = nomApe;
     }
 
-    public int getIdBO() {
+    public Integer getIdBO() {
         return idBO;
     }
 
-    public void setIdBO(int idBO) {
+    public void setIdBO(Integer idBO) {
         this.idBO = idBO;
     }
 

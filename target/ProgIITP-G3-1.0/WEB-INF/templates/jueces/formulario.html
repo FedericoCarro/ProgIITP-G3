@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Formulario Juez</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <h1>Datos del Juez</h1>
+    <form th:action="@{/jueces/guardar}" th:object="${juez}" method="post" class="form-container">
+        <input type="hidden" th:field="*{clave}">
+        <div class="form-group">
+            <label>Nombre:</label>
+            <input type="text" th:field="*{nombre}" required>
+        </div>
+        <div class="form-group">
+            <label>Años de Servicio:</label>
+            <input type="number" th:field="*{aniosDeServicio}" required>
+        </div>
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+</body>
+</html>

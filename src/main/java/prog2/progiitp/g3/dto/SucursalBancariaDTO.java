@@ -1,26 +1,26 @@
 package prog2.progiitp.g3.dto;
 
 public class SucursalBancariaDTO {
-    private int id;
+    private Integer id;
     private String domicilio;
-    private int cantEmpleados;
-    private int idEntidadBancaria;
+    private Integer cantEmpleados;
+    private Integer idEntidadBancaria;
 
     public SucursalBancariaDTO() {
     }
 
-    public SucursalBancariaDTO(int id, String domicilio, int cantEmpleados, int idEntidadBancaria) {
+    public SucursalBancariaDTO(Integer id, String domicilio, Integer cantEmpleados, Integer idEntidadBancaria) {
         this.id = id;
         this.domicilio = domicilio;
         this.cantEmpleados = cantEmpleados;
         this.idEntidadBancaria = idEntidadBancaria;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,19 +32,19 @@ public class SucursalBancariaDTO {
         this.domicilio = domicilio;
     }
 
-    public int getCantEmpleados() {
+    public Integer getCantEmpleados() {
         return cantEmpleados;
     }
 
-    public void setCantEmpleados(int cantEmpleados) {
+    public void setCantEmpleados(Integer cantEmpleados) {
         this.cantEmpleados = cantEmpleados;
     }
 
-    public int getIdEntidadBancaria() {
+    public Integer getIdEntidadBancaria() {
         return idEntidadBancaria;
     }
 
-    public void setIdEntidadBancaria(int idEntidadBancaria) {
+    public void setIdEntidadBancaria(Integer idEntidadBancaria) {
         this.idEntidadBancaria = idEntidadBancaria;
     }
 

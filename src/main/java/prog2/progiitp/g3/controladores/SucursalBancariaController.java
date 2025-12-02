@@ -1,56 +1,62 @@
 package prog2.progiitp.g3.controladores;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prog2.progiitp.g3.dto.SucursalBancariaDTO;
+import prog2.progiitp.g3.servicios.EntidadBancariaService;
 import prog2.progiitp.g3.servicios.SucursalBancariaService;
-import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/sucursales")
 public class SucursalBancariaController {
 
     @Autowired
-    private SucursalBancariaService sucursalBancariaService;
-
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<SucursalBancariaDTO> crearSucursal(@RequestBody SucursalBancariaDTO dto) {
-        SucursalBancariaDTO nuevaSucursal = sucursalBancariaService.crearSucursal(dto);
-        return new ResponseEntity<>(nuevaSucursal, HttpStatus.CREATED);
-    }
+    private SucursalBancariaService sucursalService;
+    
+    @Autowired
+    private EntidadBancariaService entidadService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<List<SucursalBancariaDTO>> obtenerTodas() {
-        List<SucursalBancariaDTO> sucursales = sucursalBancariaService.obtenerTodas();
-        return new ResponseEntity<>(sucursales, HttpStatus.OK);
+    public String listar(Model model) {
+        model.addAttribute("sucursales", sucursalService.obtenerTodas());
+        return "sucursales/lista";
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('INVESTIGADOR')")
-    public ResponseEntity<SucursalBancariaDTO> obtenerPorId(@PathVariable int id) {
-        SucursalBancariaDTO sucursal = sucursalBancariaService.obtenerPorId(id);
-        return new ResponseEntity<>(sucursal, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}")
+    @GetMapping("/nuevo")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<SucursalBancariaDTO> actualizarSucursal(
-            @PathVariable int id,
-            @RequestBody SucursalBancariaDTO dto) {
-        
-        SucursalBancariaDTO sucursalActualizada = sucursalBancariaService.actualizarSucursal(id, dto);
-        return new ResponseEntity<>(sucursalActualizada, HttpStatus.OK);
+    public String formularioCrear(Model model) {
+        model.addAttribute("sucursal", new SucursalBancariaDTO());
+        model.addAttribute("listaEntidades", entidadService.obtenerTodas());
+        return "sucursales/formulario";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/editar/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<Void> borrarSucursal(@PathVariable int id) {
-        sucursalBancariaService.borrarSucursal(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public String formularioEditar(@PathVariable int id, Model model) {
+        model.addAttribute("sucursal", sucursalService.obtenerPorId(id));
+        model.addAttribute("listaEntidades", entidadService.obtenerTodas());
+        return "sucursales/formulario";
     }
 
+    @PostMapping("/guardar")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String guardar(@ModelAttribute SucursalBancariaDTO dto) {
+        if (dto.getId()!=null && dto.getId() > 0) {
+            sucursalService.actualizarSucursal(dto.getId(), dto);
+        } else {
+            sucursalService.crearSucursal(dto);
+        }
+        return "redirect:/sucursales";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public String eliminar(@PathVariable int id) {
+        sucursalService.borrarSucursal(id);
+        return "redirect:/sucursales";
+    }
 }

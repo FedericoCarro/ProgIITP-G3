@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head><title>Contratos</title><link rel="stylesheet" th:href="@{/resources/css/style.css}"></head>
+<body>
+    <header class="page-header">
+        <h1>Gestión de Contratos</h1>
+        <a th:href="@{/dashboard}" class="btn-volver">Volver</a>
+    </header>
+    <main class="content-wrapper">
+        <div sec:authorize="hasAuthority('ADMINISTRADOR')">
+            <a th:href="@{/contratos/nuevo}" class="btn-guardar">Nuevo Contrato</a>
+        </div>
+        <br>
+        <table class="data-table">
+            <thead>
+                <tr><th>ID Vigilante</th><th>ID Sucursal</th><th>Arma</th><th>Inicio</th><th>Fin</th><th sec:authorize="hasAuthority('ADMINISTRADOR')">Acciones</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="c : ${contratos}">
+                    <td th:text="${c.idVigilante}"></td>
+                    <td th:text="${c.idSucBancaria}"></td>
+                    <td th:text="${c.conArma} ? 'Sí' : 'No'"></td>
+                    <td th:text="${c.fechaInicioJornada}"></td>
+                    <td th:text="${c.fechaFinJornada}"></td>
+                    <td sec:authorize="hasAuthority('ADMINISTRADOR')">
+                        <a th:href="@{/contratos/eliminar/{id}(id=${c.id})}" class="btn-delete" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

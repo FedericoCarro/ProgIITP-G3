@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Usuario</title>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <header class="page-header">
+        <h1 th:text="${usuario.id != 0} ? 'Editar Usuario' : 'Nuevo Usuario'">Datos del Usuario</h1>
+        <a th:href="@{/usuarios}" class="btn-volver">Volver a la Lista</a>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="form-container">
+            <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+                
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label>Nombre y Apellido:</label>
+                    <input type="text" th:field="*{nomApe}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>DNI:</label>
+                    <input type="number" th:field="*{dni}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="number" th:field="*{tel}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Edad:</label>
+                    <input type="number" th:field="*{edad}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Permiso (Rol):</label>
+                    <select th:field="*{permiso}" required>
+                        <option value="">-- Seleccione un Rol --</option>
+                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                        <option value="INVESTIGADOR">INVESTIGADOR</option>
+                        <option value="VIGILANTE">VIGILANTE</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" th:field="*{contrasenia}">
+                    <small style="color: #666;">
+                        (Dejar en blanco para mantener la contraseña actual al editar)
+                    </small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
